@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Environment & secrets
+.env
+.env.*
+*.env
+
+# Node / build outputs (not applicable here but good practice)
+node_modules/
+dist/
+.next/
+.cache/
+*.log
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo

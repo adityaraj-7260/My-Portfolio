@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aditya Raj | Portfolio</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fira+Code:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-dark: #06050b;
+      --card-bg: rgba(13, 10, 25, 0.72);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover-border: rgba(168, 85, 247, 0.35);
+      --pink-accent: #f43f5e;
+      --magenta: #d946ef;
+      --purple-accent: #a855f7;
+      --blue-accent: #38bdf8;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --gradient-primary: linear-gradient(90deg, #ec4899, #a855f7);
+      --gradient-glow: linear-gradient(135deg, rgba(236, 72, 153, 0.25), rgba(168, 85, 247, 0.15));
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(6, 5, 11, 0.9);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(236, 72, 153, 0.3);
+      border-radius: 6px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(236, 72, 153, 0.6);
+    }
+
+    /* =========================================================
+       FIXED CANVAS SCROLL ANIMATION BACKGROUND
+       ========================================================= */
+    #canvas-container {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      background-color: var(--bg-dark);
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Cinematic vignette overlay to keep text ultra-legible */
+    #canvas-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 38%, rgba(6, 5, 11, 0.15) 0%, rgba(6, 5, 11, 0.72) 75%, rgba(6, 5, 11, 0.95) 100%);
+      pointer-events: none;
+    }
+
+    /* =========================================================
+       PAGE CONTENT CONTAINER
+       ========================================================= */
+    #page-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Pill Badges */
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #f43f5e;
+      background: rgba(244, 63, 94, 0.12);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      margin-bottom: 16px;
+    }
+
+    /* Buttons */
+    .btn-gradient {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 24px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      background: var(--gradient-primary);
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(236, 72, 153, 0.35);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-gradient:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 26px rgba(236, 72, 153, 0.55);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 24px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      text-decoration: none;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: all 0.25s ease;
+    }
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(236, 72, 153, 0.5);
+      transform: translateY(-2px);
+    }
+
+    /* =========================================================
+       NAVBAR
+       ========================================================= */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(6, 5, 11, 0.7);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      transition: background 0.3s ease;
+    }
+    .nav-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    .logo-icon {
+      color: var(--pink-accent);
+      font-weight: 800;
+      font-size: 19px;
+      letter-spacing: -1px;
+    }
+    .logo span {
+      background: linear-gradient(90deg, #ffffff, #e2e8f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s ease;
+      position: relative;
+      padding-bottom: 4px;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: #ffffff;
+    }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--pink-accent);
+      border-radius: 2px;
+    }
+
+    /* =========================================================
+       HERO SECTION
+       ========================================================= */
+    #home {
+      min-height: 100vh;
+      padding-top: 130px;
+      padding-bottom: 80px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 48px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.8rem, 5.2vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+    .hero-content h1 .gradient-text {
+      background: linear-gradient(135deg, #f43f5e, #c084fc, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-bio {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 530px;
+      margin-bottom: 30px;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 38px;
+    }
+
+    /* Hero Tech Stack Icons */
+    .hero-tech-icons {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .tech-icon-pill {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      transition: all 0.25s ease;
+    }
+    .tech-icon-pill:hover {
+      transform: translateY(-3px) scale(1.08);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(236, 72, 153, 0.4);
+    }
+    .tech-icon-pill svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Hero Right: Code Card & Handwriting */
+    .hero-visual-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      position: relative;
+    }
+
+    .handwriting-note {
+      font-family: 'Caveat', cursive;
+      font-size: 26px;
+      color: #c084fc;
+      line-height: 1.15;
+      text-align: right;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      margin-right: 30px;
+    }
+    .handwriting-note svg {
+      width: 32px;
+      height: 32px;
+      stroke: #c084fc;
+      fill: none;
+      transform: rotate(-10deg);
+    }
+
+    .code-card {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(12, 9, 24, 0.78);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 16px 45px -10px rgba(168, 85, 247, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .code-card-header {
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+
+    .code-body {
+      padding: 18px 20px;
+      font-family: 'Fira Code', monospace;
+      font-size: 12.5px;
+      line-height: 1.7;
+    }
+    .code-keyword { color: #f43f5e; font-weight: 500; }
+    .code-var { color: #38bdf8; }
+    .code-prop { color: #c084fc; }
+    .code-str { color: #fde047; }
+    .code-punct { color: #e2e8f0; }
+
+    /* =========================================================
+       ABOUT SECTION
+       ========================================================= */
+    #about {
+      padding: 110px 0;
+      position: relative;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .about-left h2 {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.2;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+    .about-left h2 span {
+      background: linear-gradient(135deg, #f43f5e, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .about-bio {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.75;
+      margin-bottom: 28px;
+      max-width: 480px;
+    }
+
+    /* 2x2 Metric Cards */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 24px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .metric-card:hover {
+      border-color: var(--card-hover-border);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px -10px rgba(168, 85, 247, 0.25);
+    }
+    .metric-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(168, 85, 247, 0.12);
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      color: #c084fc;
+    }
+    .metric-card:nth-child(2) .metric-icon-box {
+      background: rgba(56, 189, 248, 0.12);
+      border-color: rgba(56, 189, 248, 0.25);
+      color: #38bdf8;
+    }
+    .metric-card:nth-child(3) .metric-icon-box {
+      background: rgba(59, 130, 246, 0.12);
+      border-color: rgba(59, 130, 246, 0.25);
+      color: #60a5fa;
+    }
+    .metric-card:nth-child(4) .metric-icon-box {
+      background: rgba(236, 72, 153, 0.12);
+      border-color: rgba(236, 72, 153, 0.25);
+      color: #f43f5e;
+    }
+    .metric-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 4px;
+      line-height: 1.1;
+    }
+    .metric-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* =========================================================
+       SKILLS SECTION
+       ========================================================= */
+    #skills {
+      padding: 110px 0;
+      position: relative;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 54px;
+    }
+    .section-header h2 {
+      font-size: clamp(2.2rem, 3.8vw, 2.9rem);
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .skill-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px 22px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: all 0.3s ease;
+    }
+    .skill-card:hover {
+      border-color: var(--card-hover-border);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px -8px rgba(168, 85, 247, 0.25);
+    }
+    .skill-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .skill-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .skill-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .skill-name {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .skill-percent {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 7px;
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, #38bdf8, #8b5cf6, #ec4899);
+      box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+      transition: width 1s ease-out;
+    }
+
+    /* =========================================================
+       PROJECTS SECTION
+       ========================================================= */
+    #projects {
+      padding: 110px 0;
+      position: relative;
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      overflow: hidden;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .project-card:hover {
+      border-color: var(--card-hover-border);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px -12px rgba(168, 85, 247, 0.35);
+    }
+
+    .project-preview {
+      height: 180px;
+      background: #0d0a1b;
+      position: relative;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .project-index-badge {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      background: rgba(6, 5, 11, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #e2e8f0;
+      z-index: 2;
+    }
+
+    /* Mock Preview Windows */
+    .mockup-window {
+      width: 100%;
+      height: 100%;
+      background: rgba(22, 17, 38, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .mockup-bar {
+      height: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0 8px;
+    }
+    .mockup-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .mockup-content {
+      flex: 1;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .mockup-hero-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .mockup-title-block {
+      height: 8px;
+      width: 60%;
+      background: linear-gradient(90deg, #ec4899, #a855f7);
+      border-radius: 4px;
+    }
+    .mockup-thumb {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #f43f5e 0%, #1e1b4b 100%);
+    }
+    .mockup-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .mockup-cell {
+      height: 28px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .project-body {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-header-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .project-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .sih-badge {
+      font-size: 10px;
+      font-weight: 700;
+      color: #ffffff;
+      background: linear-gradient(90deg, #ec4899, #8b5cf6);
+      padding: 2px 7px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+    .project-desc {
+      color: var(--text-muted);
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+    .project-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .project-tags {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .project-tag {
+      font-size: 11px;
+      font-weight: 500;
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .project-link {
+      color: #f43f5e;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap 0.2s ease, color 0.2s ease;
+    }
+    .project-link:hover {
+      color: #fb7185;
+      gap: 7px;
+    }
+    .live-demo-badge {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .live-demo-badge:hover {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: #38bdf8;
+      transform: translateY(-1px);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+    }
+    .live-demo-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      background: linear-gradient(90deg, #ec4899, #8b5cf6);
+      text-decoration: none;
+      box-shadow: 0 2px 10px rgba(236, 72, 153, 0.35);
+      transition: all 0.2s ease;
+    }
+    .live-demo-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(236, 72, 153, 0.6);
+      color: #ffffff;
+    }
+
+
+
+    /* =========================================================
+       CONTACT SECTION
+       ========================================================= */
+    #contact {
+      padding: 110px 0 80px 0;
+      position: relative;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.05fr 0.95fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .contact-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .contact-left h2 {
+      font-size: clamp(2rem, 3.2vw, 2.5rem);
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .contact-left p {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    /* Quote Card */
+    .quote-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 28px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .quote-icon {
+      font-size: 34px;
+      color: #c084fc;
+      line-height: 1;
+      margin-bottom: 12px;
+      font-family: serif;
+    }
+    .quote-text {
+      font-size: 14.5px;
+      color: #e2e8f0;
+      line-height: 1.65;
+      font-style: italic;
+      margin-bottom: 24px;
+    }
+    .quote-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .author-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(236, 72, 153, 0.5);
+    }
+    .author-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .author-sub {
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    /* Contact Right Card */
+    .contact-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 28px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+    }
+    .contact-card-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #c084fc;
+    }
+    .social-icons-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .social-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+    .social-btn:hover {
+      background: rgba(236, 72, 153, 0.2);
+      border-color: rgba(236, 72, 153, 0.5);
+      transform: translateY(-3px);
+      color: #f43f5e;
+    }
+    .social-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .contact-detail-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #e2e8f0;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .contact-detail-row:hover {
+      color: #f43f5e;
+    }
+    .contact-detail-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(236, 72, 153, 0.12);
+      border: 1px solid rgba(236, 72, 153, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f43f5e;
+    }
+    .contact-detail-icon svg {
+      width: 15px;
+      height: 15px;
+      fill: currentColor;
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 24px 0;
+      background: rgba(6, 5, 11, 0.85);
+      backdrop-filter: blur(12px);
+    }
+    .footer-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-social-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .footer-social-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .footer-social-icon:hover {
+      background: rgba(236, 72, 153, 0.2);
+      border-color: rgba(236, 72, 153, 0.5);
+      color: #f43f5e;
+      transform: translateY(-2px);
+    }
+    .footer-heart {
+      color: #f43f5e;
+      display: inline-block;
+      margin: 0 2px;
+    }
+
+    /* =========================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================= */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .hero-visual-col {
+        align-items: flex-start;
+      }
+      .code-card {
+        max-width: 100%;
+      }
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-content {
+        flex-direction: column;
+        gap: 14px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FIXED CANVAS SCROLL ANIMATION -->
+  <div id="canvas-container">
+    <canvas id="animation-canvas"></canvas>
+    <div id="canvas-overlay"></div>
+  </div>
+
+  <!-- PAGE CONTENT (SCROLLABLE ON TOP OF ANIMATION) -->
+  <div id="page-content">
+
+    <!-- NAVBAR -->
+    <header>
+      <div class="nav-container">
+        <a href="#home" class="logo">
+          <span class="logo-icon">&lt; / &gt;</span>
+          <span>Aditya Raj</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="#home" class="nav-item active">Home</a></li>
+          <li><a href="#about" class="nav-item">About</a></li>
+          <li><a href="#skills" class="nav-item">Skills</a></li>
+          <li><a href="#projects" class="nav-item">Projects</a></li>
+          <li><a href="#contact" class="nav-item">Contact</a></li>
+        </ul>
+        <a href="Aditya-Resume.pdf" download="Aditya-Raj-CV.pdf" class="btn-gradient" title="Download CV">
+          Download CV
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="home">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <div class="pill-badge">HEY, I'M ADITYA RAJ</div>
+            <h1>I Build Digital<br /><span class="gradient-text">Experiences.</span></h1>
+            <p class="hero-bio">
+              I'm a Computer Science student at Noida International University, passionate about building modern web applications, solving real-world problems and exploring new technologies. I love turning ideas into clean, responsive and impactful products.
+            </p>
+            <div class="hero-actions">
+              <a href="#projects" class="btn-gradient">
+                View My Projects
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+              <a href="Aditya-Resume.pdf" download="Aditya-Raj-CV.pdf" class="btn-outline" title="Download CV">
+                Download CV
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+
+            <!-- Tech Icons Bar -->
+            <div class="hero-tech-icons">
+              <!-- C++ -->
+              <div class="tech-icon-pill" title="C++">
+                <svg viewBox="0 0 24 24">
+                  <path fill="#00599C" d="M12 2L2 7.5v9L12 22l10-5.5v-9L12 2zm-1 13.5c-2.5 0-4.5-2-4.5-4.5S8.5 6.5 11 6.5c1.4 0 2.7.6 3.5 1.7l-1.4 1.1c-.5-.7-1.3-1-2.1-1-1.5 0-2.7 1.2-2.7 2.7s1.2 2.7 2.7 2.7c.8 0 1.6-.4 2.1-1.1l1.4 1.1c-.8 1.1-2.1 1.8-3.5 1.8zm6-3.5h-1v1h-1v-1h-1v-1h1v-1h1v1h1v1zm3 0h-1v1h-1v-1h-1v-1h1v-1h1v1h1v1z"/>
+                </svg>
+              </div>
+              <!-- Python -->
+              <div class="tech-icon-pill" title="Python">
+                <svg viewBox="0 0 24 24">
+                  <path fill="#3776AB" d="M11.9 2c-4 0-3.8 1.7-3.8 1.7l.1 1.8h3.8v.5H5.8S2 5.6 2 9.7c0 4.1 3.3 3.9 3.3 3.9h1.1v-1.6s-.1-1.9 1.9-1.9h3.7c1.8 0 1.9-1.8 1.9-1.8V4.4s.2-2.4-3.9-2.4zm-1.1 1.2c.4 0 .7.3.7.7s-.3.7-.7.7-.7-.3-.7-.7.3-.7.7-.7z"/>
+                  <path fill="#FFD43B" d="M12.1 22c4 0 3.8-1.7 3.8-1.7l-.1-1.8h-3.8v-.5h6.2s3.8.4 3.8-3.7c0-4.1-3.3-3.9-3.3-3.9h-1.1v1.6s.1 1.9-1.9 1.9h-3.7c-1.8 0-1.9 1.8-1.9 1.8v3.9s-.2 2.4 3.9 2.4zm1.1-1.2c-.4 0-.7-.3-.7-.7s.3-.7.7-.7.7.3.7.7-.3.7-.7.7z"/>
+                </svg>
+              </div>
+              <!-- JavaScript -->
+              <div class="tech-icon-pill" title="JavaScript">
+                <svg viewBox="0 0 24 24">
+                  <rect width="24" height="24" rx="4" fill="#F7DF1E"/>
+                  <path fill="#000" d="M6.5 18.5l1.6-.9c.4.7.7 1.2 1.5 1.2.8 0 1.3-.3 1.3-1.4v-6.9h2v7c0 2-1.2 2.9-3.1 2.9-1.7 0-2.8-.9-3.3-1.9zm8.2-1l1.6-.9c.4.6.9 1.1 1.8 1.1.8 0 1.3-.4 1.3-.9 0-.6-.5-.8-1.5-1.3l-.5-.2c-1.5-.6-2.5-1.4-2.5-3.1 0-1.6 1.2-2.8 3.1-2.8 1.4 0 2.3.5 3 1.7l-1.5 1c-.3-.6-.7-.8-1.4-.8-.7 0-1.1.4-1.1.8 0 .5.4.7 1.3 1.1l.5.2c1.7.7 2.7 1.5 2.7 3.2 0 1.8-1.4 2.9-3.4 2.9-1.9 0-3.1-.9-3.7-2.2z"/>
+                </svg>
+              </div>
+              <!-- React -->
+              <div class="tech-icon-pill" title="React">
+                <svg viewBox="0 0 24 24" fill="#61DAFB">
+                  <ellipse cx="12" cy="12" rx="10" ry="4.2" fill="none" stroke="#61DAFB" stroke-width="1.3"/>
+                  <ellipse cx="12" cy="12" rx="10" ry="4.2" fill="none" stroke="#61DAFB" stroke-width="1.3" transform="rotate(60 12 12)"/>
+                  <ellipse cx="12" cy="12" rx="10" ry="4.2" fill="none" stroke="#61DAFB" stroke-width="1.3" transform="rotate(120 12 12)"/>
+                  <circle cx="12" cy="12" r="1.8"/>
+                </svg>
+              </div>
+              <!-- Next.js -->
+              <div class="tech-icon-pill" title="Next.js">
+                <svg viewBox="0 0 24 24" fill="#ffffff">
+                  <circle cx="12" cy="12" r="11" fill="#000" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                  <path fill="#fff" d="M14.9 16.5l-6-8.2h-1.5v8.2h1.4v-6.3l5.5 7.6c.2-.4.4-.8.6-1.3zM15.4 8.3h1.4v6.8h-1.4z"/>
+                </svg>
+              </div>
+              <!-- Tailwind CSS -->
+              <div class="tech-icon-pill" title="Tailwind CSS">
+                <svg viewBox="0 0 24 24" fill="#38BDF8">
+                  <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.335 6.182 14.975 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.335 13.382 8.975 12 6.001 12z"/>
+                </svg>
+              </div>
+              <!-- MongoDB -->
+              <div class="tech-icon-pill" title="MongoDB">
+                <svg viewBox="0 0 24 24">
+                  <path fill="#47A248" d="M12 22s5.8-3.4 5.8-10.4C17.8 5.7 13.4 2.6 12 2c-1.4.6-5.8 3.7-5.8 9.6 0 7 5.8 10.4 5.8 10.4z"/>
+                  <path fill="#ffffff" opacity="0.6" d="M12 2v20c.3 0 1.2-.4 1.9-1.2.9-1 3.9-4.8 3.9-9.2 0-5.2-3.7-8.3-5.8-9.6z"/>
+                </svg>
+              </div>
+              <!-- Git -->
+              <div class="tech-icon-pill" title="Git">
+                <svg viewBox="0 0 24 24" fill="#F05032">
+                  <path d="M21.7 10.7l-8.4-8.4c-.8-.8-2.2-.8-3 0l-1.8 1.8 3.8 3.8c.6-.2 1.4 0 1.9.5.5.5.7 1.3.5 1.9l3.7 3.7c.6-.2 1.4 0 1.9.5.8.8.8 2.2 0 3-.8.8-2.2.8-3 0-.6-.6-.8-1.4-.5-2.1l-3.4-3.4v4.9c.2.3.3.6.3 1 0 1.1-.9 2-2 2s-2-.9-2-2c0-.4.1-.7.3-1v-5c-.2-.3-.3-.6-.3-1 0-.8.5-1.5 1.2-1.8L8.8 4.2 2.3 10.7c-.8.8-.8 2.2 0 3l8.4 8.4c.8.8 2.2.8 3 0l8-8c.9-.8.9-2.2 0-3.4z"/>
+                </svg>
+              </div>
+              <!-- VS Code -->
+              <div class="tech-icon-pill" title="VS Code">
+                <svg viewBox="0 0 24 24" fill="#007ACC">
+                  <path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.27a1 1 0 0 0-.005 1.46l4.24 3.916-4.24 3.916a1 1 0 0 0 .005 1.46l1.322 1.212a.999.999 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 0 0 1.704.29l4.94-2.377A1.5 1.5 0 0 0 24 21.36V3.947a1.5 1.5 0 0 0-.85-1.36zM18 17.5l-6.8-5.5L18 6.5v11z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Code Card & Handwritten Note -->
+          <div class="hero-visual-col">
+            <div class="handwriting-note">
+              <span>Code<br />Create<br />Build</span>
+              <svg viewBox="0 0 40 40">
+                <path d="M30 6 C24 18, 14 26, 8 32 M8 32 L15 32 M8 32 L10 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
+            <div class="code-card">
+              <div class="code-card-header">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+              </div>
+              <div class="code-body">
+                <div><span class="code-keyword">const</span> <span class="code-var">aditya</span> <span class="code-punct">= {</span></div>
+                <div style="padding-left: 18px;">
+                  <span class="code-prop">name</span><span class="code-punct">:</span> <span class="code-str">"Aditya Raj"</span><span class="code-punct">,</span>
+                </div>
+                <div style="padding-left: 18px;">
+                  <span class="code-prop">role</span><span class="code-punct">:</span> <span class="code-str">"B.Tech CSE (3rd Year)"</span><span class="code-punct">,</span>
+                </div>
+                <div style="padding-left: 18px;">
+                  <span class="code-prop">passion</span><span class="code-punct">:</span> <span class="code-str">"Web Development"</span><span class="code-punct">,</span>
+                </div>
+                <div style="padding-left: 18px;">
+                  <span class="code-prop">skills</span><span class="code-punct">: [</span><span class="code-str">"React"</span><span class="code-punct">,</span> <span class="code-str">"Next.js"</span><span class="code-punct">,</span>
+                </div>
+                <div style="padding-left: 68px;">
+                  <span class="code-str">"TypeScript"</span><span class="code-punct">,</span> <span class="code-str">"Tailwind CSS"</span><span class="code-punct">,</span>
+                </div>
+                <div style="padding-left: 68px;">
+                  <span class="code-str">"MongoDB"</span><span class="code-punct">],</span>
+                </div>
+                <div><span class="code-punct">};</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-left">
+            <div class="pill-badge">ABOUT ME</div>
+            <h2>Turning ideas into<br /><span>functional websites.</span></h2>
+            <p class="about-bio">
+              I'm Aditya Raj, a 3rd year B.Tech CSE student at Noida International University. I enjoy building web applications, working on hackathons and constantly learning new technologies to grow as a developer.
+            </p>
+            <a href="#contact" class="btn-outline">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              More About Me
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </a>
+          </div>
+
+          <!-- 4 Metrics Cards -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                  <text x="12" y="17" font-size="7" font-weight="bold" fill="currentColor" text-anchor="middle">21</text>
+                </svg>
+              </div>
+              <div class="metric-value">3+</div>
+              <div class="metric-label">Years Experience</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+              </div>
+              <div class="metric-value">10+</div>
+              <div class="metric-label">Projects Completed</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                  <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                  <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                </svg>
+              </div>
+              <div class="metric-value">100%</div>
+              <div class="metric-label">Learning Mindset</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </div>
+              <div class="metric-value">Always</div>
+              <div class="metric-label">Evolving</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section id="skills">
+      <div class="container">
+        <div class="section-header">
+          <div class="pill-badge">MY SKILLS</div>
+          <h2>Technologies I Work With</h2>
+        </div>
+
+        <div class="skills-grid">
+          <!-- C++ -->
+          <div class="skill-card">
+            <div class="skill-top">
+              <div class="skill-info">
+                <div class="skill-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="#00599C" d="M12 2L2 7.5v9L12 22l10-5.5v-9L12 2zm-1 13.5c-2.5 0-4.5-2-4.5-4.5S8.5 6.5 11 6.5c1.4 0 2.7.6 3.5 1.7l-1.4 1.1c-.5-.7-1.3-1-2.1-1-1.5 0-2.7 1.2-2.7 2.7s1.2 2.7 2.7 2.7c.8 0 1.6-.4 2.1-1.1l1.4 1.1c-.8 1.1-2.1 1.8-3.5 1.8zm6-3.5h-1v1h-1v-1h-1v-1h1v-1h1v1h1v1zm3 0h-1v1h-1v-1h-1v-1h1v-1h1v1h1v1z"/>
+                  </svg>
+                </div>
+                <span class="skill-name">C++</span>
+              </div>
+              <span class="skill-percent">90%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-bar" style="width: 90%;"></div>
+            </div>
+          </div>
+
+          <!-- React / Next.js -->
+          <div class="skill-card">
+            <div class="skill-top">
+              <div class="skill-info">
+                <div class="skill-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="#61DAFB">
+                    <ellipse cx="12" cy="12" rx="10" ry="4.2" fill="none" stroke="#61DAFB" stroke-width="1.3"/>
+                    <ellipse cx="12" cy="12" rx="10" ry="4.2" fill="none" stroke="#61DAFB" stroke-width="1.3" transform="rotate(60 12 12)"/>
+                    <ellipse cx="12" cy="12" rx="10" ry="4.2" fill="none" stroke="#61DAFB" stroke-width="1.3" transform="rotate(120 12 12)"/>
+                    <circle cx="12" cy="12" r="1.8"/>
+                  </svg>
+                </div>
+                <span class="skill-name">React / Next.js</span>
+              </div>
+              <span class="skill-percent">85%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-bar" style="width: 85%;"></div>
+            </div>
+          </div>
+
+          <!-- Git / GitHub -->
+          <div class="skill-card">
+            <div class="skill-top">
+              <div class="skill-info">
+                <div class="skill-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="#F05032">
+                    <path d="M21.7 10.7l-8.4-8.4c-.8-.8-2.2-.8-3 0l-1.8 1.8 3.8 3.8c.6-.2 1.4 0 1.9.5.5.5.7 1.3.5 1.9l3.7 3.7c.6-.2 1.4 0 1.9.5.8.8.8 2.2 0 3-.8.8-2.2.8-3 0-.6-.6-.8-1.4-.5-2.1l-3.4-3.4v4.9c.2.3.3.6.3 1 0 1.1-.9 2-2 2s-2-.9-2-2c0-.4.1-.7.3-1v-5c-.2-.3-.3-.6-.3-1 0-.8.5-1.5 1.2-1.8L8.8 4.2 2.3 10.7c-.8.8-.8 2.2 0 3l8.4 8.4c.8.8 2.2.8 3 0l8-8c.9-.8.9-2.2 0-3.4z"/>
+                  </svg>
+                </div>
+                <span class="skill-name">Git / GitHub</span>
+              </div>
+              <span class="skill-percent">85%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-bar" style="width: 85%;"></div>
+            </div>
+          </div>
+
+          <!-- Python -->
+          <div class="skill-card">
+            <div class="skill-top">
+              <div class="skill-info">
+                <div class="skill-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="#3776AB" d="M11.9 2c-4 0-3.8 1.7-3.8 1.7l.1 1.8h3.8v.5H5.8S2 5.6 2 9.7c0 4.1 3.3 3.9 3.3 3.9h1.1v-1.6s-.1-1.9 1.9-1.9h3.7c1.8 0 1.9-1.8 1.9-1.8V4.4s.2-2.4-3.9-2.4zm-1.1 1.2c.4 0 .7.3.7.7s-.3.7-.7.7-.7-.3-.7-.7.3-.7.7-.7z"/>
+                    <path fill="#FFD43B" d="M12.1 22c4 0 3.8-1.7 3.8-1.7l-.1-1.8h-3.8v-.5h6.2s3.8.4 3.8-3.7c0-4.1-3.3-3.9-3.3-3.9h-1.1v1.6s.1 1.9-1.9 1.9h-3.7c-1.8 0-1.9 1.8-1.9 1.8v3.9s-.2 2.4 3.9 2.4zm1.1-1.2c-.4 0-.7-.3-.7-.7s.3-.7.7-.7.7.3.7.7-.3.7-.7.7z"/>
+                  </svg>
+                </div>
+                <span class="skill-name">Python</span>
+              </div>
+              <span class="skill-percent">85%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-bar" style="width: 85%;"></div>
+            </div>
+          </div>
+
+          <!-- Tailwind CSS -->
+          <div class="skill-card">
+            <div class="skill-top">
+              <div class="skill-info">
+                <div class="skill-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="#38BDF8">
+                    <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.335 6.182 14.975 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.335 13.382 8.975 12 6.001 12z"/>
+                  </svg>
+                </div>
+                <span class="skill-name">Tailwind CSS</span>
+              </div>
+              <span class="skill-percent">80%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-bar" style="width: 80%;"></div>
+            </div>
+          </div>
+
+          <!-- REST APIs -->
+          <div class="skill-card">
+            <div class="skill-top">
+              <div class="skill-info">
+                <div class="skill-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                  </svg>
+                </div>
+                <span class="skill-name">REST APIs</span>
+              </div>
+              <span class="skill-percent">70%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-bar" style="width: 70%;"></div>
+            </div>
+          </div>
+
+          <!-- JavaScript / TypeScript -->
+          <div class="skill-card">
+            <div class="skill-top">
+              <div class="skill-info">
+                <div class="skill-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <rect width="24" height="24" rx="4" fill="#F7DF1E"/>
+                    <path fill="#000" d="M6.5 18.5l1.6-.9c.4.7.7 1.2 1.5 1.2.8 0 1.3-.3 1.3-1.4v-6.9h2v7c0 2-1.2 2.9-3.1 2.9-1.7 0-2.8-.9-3.3-1.9zm8.2-1l1.6-.9c.4.6.9 1.1 1.8 1.1.8 0 1.3-.4 1.3-.9 0-.6-.5-.8-1.5-1.3l-.5-.2c-1.5-.6-2.5-1.4-2.5-3.1 0-1.6 1.2-2.8 3.1-2.8 1.4 0 2.3.5 3 1.7l-1.5 1c-.3-.6-.7-.8-1.4-.8-.7 0-1.1.4-1.1.8 0 .5.4.7 1.3 1.1l.5.2c1.7.7 2.7 1.5 2.7 3.2 0 1.8-1.4 2.9-3.4 2.9-1.9 0-3.1-.9-3.7-2.2z"/>
+                  </svg>
+                </div>
+                <span class="skill-name">JavaScript / TypeScript</span>
+              </div>
+              <span class="skill-percent">80%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-bar" style="width: 80%;"></div>
+            </div>
+          </div>
+
+          <!-- MongoDB -->
+          <div class="skill-card">
+            <div class="skill-top">
+              <div class="skill-info">
+                <div class="skill-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24">
+                    <path fill="#47A248" d="M12 22s5.8-3.4 5.8-10.4C17.8 5.7 13.4 2.6 12 2c-1.4.6-5.8 3.7-5.8 9.6 0 7 5.8 10.4 5.8 10.4z"/>
+                  </svg>
+                </div>
+                <span class="skill-name">MongoDB</span>
+              </div>
+              <span class="skill-percent">75%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-bar" style="width: 75%;"></div>
+            </div>
+          </div>
+
+          <!-- DSA & Algorithms -->
+          <div class="skill-card">
+            <div class="skill-top">
+              <div class="skill-info">
+                <div class="skill-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                  </svg>
+                </div>
+                <span class="skill-name">DSA & Algorithms</span>
+              </div>
+              <span class="skill-percent">75%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-bar" style="width: 75%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects">
+      <div class="container">
+        <div class="section-header">
+          <div class="pill-badge">FEATURED PROJECTS</div>
+          <h2>Some of My Recent Work</h2>
+        </div>
+
+        <div class="projects-grid">
+          <!-- Project 1: KisanConnect -->
+          <div class="project-card">
+            <div class="project-preview">
+              <span class="project-index-badge">01</span>
+              <div class="mockup-window">
+                <div class="mockup-bar">
+                  <span class="mockup-dot"></span>
+                  <span class="mockup-dot"></span>
+                  <span class="mockup-dot"></span>
+                </div>
+                <div class="mockup-content">
+                  <div class="mockup-hero-row">
+                    <div style="flex:1;">
+                      <div class="mockup-title-block" style="width: 75%; height: 7px; margin-bottom: 4px;"></div>
+                      <div style="width: 45%; height: 5px; background: rgba(255,255,255,0.2); border-radius: 3px;"></div>
+                    </div>
+                    <div class="mockup-thumb" style="background: radial-gradient(circle, #f43f5e 20%, #3b82f6 100%);"></div>
+                  </div>
+                  <div class="mockup-grid">
+                    <div class="mockup-cell" style="background: rgba(244, 63, 94, 0.15); border-color: rgba(244,63,94,0.3);"></div>
+                    <div class="mockup-cell"></div>
+                    <div class="mockup-cell"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="project-body">
+              <div class="project-header-row">
+                <h3 class="project-title">KisanConnect</h3>
+                <span class="sih-badge">SIH</span>
+                <a href="https://kisanconnect-orcin.vercel.app/" target="_blank" rel="noopener noreferrer" class="live-demo-badge" title="Open Live Demo">
+                  Live Demo ↗
+                </a>
+              </div>
+              <p class="project-desc">
+                AI enabled farmer-to-consumer marketplace connecting farmers/FPOs directly with consumers.
+              </p>
+              <div class="project-footer">
+                <div class="project-tags">
+                  <span class="project-tag">Next.js</span>
+                  <span class="project-tag">TypeScript</span>
+                  <span class="project-tag">Tailwind CSS</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                  <a href="https://kisanconnect-orcin.vercel.app/" target="_blank" rel="noopener noreferrer" class="live-demo-btn" title="Open KisanConnect Live Demo">
+                    Live Demo ↗
+                  </a>
+                  <a href="https://kisanconnect-orcin.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-link" title="Open KisanConnect Live Project">
+                    View Project
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2: LifeLinks -->
+          <div class="project-card">
+            <div class="project-preview">
+              <span class="project-index-badge">02</span>
+              <div class="mockup-window" style="background: rgba(240, 245, 255, 0.95);">
+                <div class="mockup-bar" style="background: #e2e8f0; border-color: #cbd5e1;">
+                  <span class="mockup-dot" style="background: #94a3b8;"></span>
+                  <span class="mockup-dot" style="background: #94a3b8;"></span>
+                  <span class="mockup-dot" style="background: #94a3b8;"></span>
+                </div>
+                <div class="mockup-content">
+                  <div style="width: 40%; height: 7px; background: #3b82f6; border-radius: 4px; margin-bottom: 6px;"></div>
+                  <div style="display: flex; gap: 4px; margin-bottom: 6px;">
+                    <div style="flex:1; height: 16px; background: #e2e8f0; border-radius: 3px;"></div>
+                    <div style="flex:1; height: 16px; background: #dbeafe; border-radius: 3px;"></div>
+                    <div style="flex:1; height: 16px; background: #e2e8f0; border-radius: 3px;"></div>
+                  </div>
+                  <div class="mockup-grid">
+                    <div class="mockup-cell" style="background: #ffffff; border-color: #cbd5e1;"></div>
+                    <div class="mockup-cell" style="background: #ffffff; border-color: #cbd5e1;"></div>
+                    <div class="mockup-cell" style="background: #ffffff; border-color: #cbd5e1;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="project-body">
+              <div class="project-header-row">
+                <h3 class="project-title">LifeLinks</h3>
+              </div>
+              <p class="project-desc">
+                AI powered blood & organ donor matching platform for a better tomorrow.
+              </p>
+              <div class="project-footer">
+                <div class="project-tags">
+                  <span class="project-tag">React</span>
+                  <span class="project-tag">Node.js</span>
+                  <span class="project-tag">MongoDB</span>
+                </div>
+                <a href="https://github.com/adityaraj-7260" target="_blank" rel="noopener noreferrer" class="project-link">
+                  View Project
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3: Rental App -->
+          <div class="project-card">
+            <div class="project-preview">
+              <span class="project-index-badge">03</span>
+              <div class="mockup-window">
+                <div class="mockup-bar">
+                  <span class="mockup-dot"></span>
+                  <span class="mockup-dot"></span>
+                  <span class="mockup-dot"></span>
+                </div>
+                <div class="mockup-content">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <div style="width: 50%; height: 7px; background: #38bdf8; border-radius: 4px;"></div>
+                    <div style="width: 22px; height: 12px; background: rgba(56, 189, 248, 0.2); border-radius: 3px;"></div>
+                  </div>
+                  <div style="height: 22px; background: rgba(255,255,255,0.06); border-radius: 4px; margin-bottom: 6px;"></div>
+                  <div class="mockup-grid">
+                    <div class="mockup-cell"></div>
+                    <div class="mockup-cell" style="background: rgba(168, 85, 247, 0.15); border-color: rgba(168,85,247,0.3);"></div>
+                    <div class="mockup-cell"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="project-body">
+              <div class="project-header-row">
+                <h3 class="project-title">Rental App</h3>
+              </div>
+              <p class="project-desc">
+                Full-stack property rental application with modern UI and seamless experience.
+              </p>
+              <div class="project-footer">
+                <div class="project-tags">
+                  <span class="project-tag">Next.js</span>
+                  <span class="project-tag">Tailwind CSS</span>
+                  <span class="project-tag">MongoDB</span>
+                </div>
+                <a href="https://github.com/adityaraj-7260" target="_blank" rel="noopener noreferrer" class="project-link">
+                  View Project
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact">
+      <div class="container">
+        <div class="contact-grid">
+          <!-- Left Column -->
+          <div class="contact-left">
+            <div class="pill-badge">LET'S CONNECT</div>
+            <h2>Got a project in mind?</h2>
+            <p>
+              I'm always open to discussing new projects and opportunities. Feel free to reach out!
+            </p>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <a href="mailto:adityaraj912898@gmail.com" class="btn-gradient">
+                Get In Touch
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+              <a href="Aditya-Resume.pdf" download="Aditya-Raj-CV.pdf" class="btn-outline" title="Download CV">
+                Download CV
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Middle Quote Card -->
+          <div class="quote-card">
+            <div>
+              <div class="quote-icon">“</div>
+              <div class="quote-text">
+                Building something meaningful requires curiosity, consistency and a little bit of madness.
+              </div>
+            </div>
+            <div class="quote-author">
+              <img src="ezgif-frame-240.jpg" alt="Aditya Raj" class="author-avatar" onerror="this.style.display='none'" />
+              <div>
+                <div class="author-name">Aditya Raj</div>
+                <div class="author-sub">B.Tech CSE | Noida International University</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Contact Card -->
+          <div class="contact-card">
+            <div class="contact-card-title">FOLLOW ME</div>
+            <div class="social-icons-row">
+              <!-- GitHub -->
+              <a href="https://github.com/adityaraj-7260" target="_blank" rel="noopener noreferrer" class="social-btn" title="GitHub" aria-label="GitHub Profile">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+              </a>
+              <!-- LinkedIn -->
+              <a href="https://www.linkedin.com/in/aditya-raj-25951933a" target="_blank" rel="noopener noreferrer" class="social-btn" title="LinkedIn" aria-label="LinkedIn Profile">
+                <svg viewBox="0 0 24 24">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+              </a>
+              <!-- Instagram -->
+              <a href="https://www.instagram.com/x.aditya.xz" target="_blank" rel="noopener noreferrer" class="social-btn" title="Instagram" aria-label="Instagram Profile">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+            </div>
+
+            <!-- Email -->
+            <a href="mailto:adityaraj912898@gmail.com" class="contact-detail-row">
+              <span class="contact-detail-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+              </span>
+              <span>adityaraj912898@gmail.com</span>
+            </a>
+
+            <!-- Phone -->
+            <a href="tel:+919693074212" class="contact-detail-row">
+              <span class="contact-detail-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+              </span>
+              <span>+91 9693074212</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container footer-content">
+        <div>© 2025 Aditya Raj. All rights reserved.</div>
+        <div class="footer-social-links">
+          <a href="https://github.com/adityaraj-7260" target="_blank" rel="noopener noreferrer" class="footer-social-icon" title="GitHub" aria-label="GitHub Profile">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/in/aditya-raj-25951933a" target="_blank" rel="noopener noreferrer" class="footer-social-icon" title="LinkedIn" aria-label="LinkedIn Profile">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+          </a>
+          <a href="https://www.instagram.com/x.aditya.xz" target="_blank" rel="noopener noreferrer" class="footer-social-icon" title="Instagram" aria-label="Instagram Profile">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
+        </div>
+        <div>Made with <span class="footer-heart">❤</span> by Aditya</div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- CANVAS ANIMATION ENGINE WITH LERP SMOOTHING -->
+  <script>
+    (function () {
+      const TOTAL_FRAMES = 300;
+      const LERP_FACTOR = 0.08;
+
+      const canvas = document.getElementById('animation-canvas');
+      const ctx = canvas.getContext('2d', { alpha: false });
+
+      const images = new Array(TOTAL_FRAMES + 1);
+      const isLoaded = new Array(TOTAL_FRAMES + 1).fill(false);
+
+      let targetProgress = 0;
+      let currentProgress = 0;
+      let lastRenderedFrameIdx = -1;
+      let currentlyRenderedImg = null;
+      let canvasW = 0;
+      let canvasH = 0;
+
+      function getFrameSrc(index) {
+        const padded = String(index).padStart(3, '0');
+        return `ezgif-frame-${padded}.jpg`;
+      }
+
+      function resizeCanvas() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+
+        canvas.width = Math.round(w * dpr);
+        canvas.height = Math.round(h * dpr);
+        canvasW = canvas.width;
+        canvasH = canvas.height;
+
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+
+        if (currentlyRenderedImg) {
+          drawFrame(currentlyRenderedImg);
+        } else if (lastRenderedFrameIdx > 0) {
+          const img = getBestFrame(lastRenderedFrameIdx);
+          if (img) drawFrame(img);
+        }
+      }
+
+      function drawFrame(img) {
+        if (!img || !img.complete || img.naturalWidth === 0) return;
+
+        const iw = img.naturalWidth;
+        const ih = img.naturalHeight;
+
+        // Object-fit: cover logic
+        const scale = Math.max(canvasW / iw, canvasH / ih);
+        const nw = iw * scale;
+        const nh = ih * scale;
+        const nx = (canvasW - nw) * 0.5;
+        const ny = (canvasH - nh) * 0.5;
+
+        ctx.drawImage(img, nx, ny, nw, nh);
+        currentlyRenderedImg = img;
+      }
+
+      function getBestFrame(index) {
+        if (isLoaded[index] && images[index]) {
+          return images[index];
+        }
+
+        for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
+          const prev = index - offset;
+          if (prev >= 1 && isLoaded[prev] && images[prev]) return images[prev];
+          const next = index + offset;
+          if (next <= TOTAL_FRAMES && isLoaded[next] && images[next]) return images[next];
+        }
+        return null;
+      }
+
+      function getCurrentDesiredIndex() {
+        return Math.min(
+          TOTAL_FRAMES,
+          Math.max(1, Math.round(1 + currentProgress * (TOTAL_FRAMES - 1)))
+        );
+      }
+
+      function renderFrame(index) {
+        const img = getBestFrame(index);
+        if (img && (img !== currentlyRenderedImg || index !== lastRenderedFrameIdx)) {
+          drawFrame(img);
+          lastRenderedFrameIdx = index;
+        }
+      }
+
+      function updateScrollProgress() {
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        if (maxScroll <= 0) {
+          targetProgress = 0;
+        } else {
+          targetProgress = Math.max(0, Math.min(1, window.scrollY / maxScroll));
+        }
+      }
+
+      function tick() {
+        const diff = targetProgress - currentProgress;
+
+        if (Math.abs(diff) > 0.00005) {
+          currentProgress += diff * LERP_FACTOR;
+        } else {
+          currentProgress = targetProgress;
+        }
+
+        const desiredIndex = getCurrentDesiredIndex();
+        if (desiredIndex !== lastRenderedFrameIdx) {
+          renderFrame(desiredIndex);
+        }
+
+        requestAnimationFrame(tick);
+      }
+
+      function preloadSequence() {
+        const first = new Image();
+        first.src = getFrameSrc(1);
+
+        const onFirstReady = () => {
+          images[1] = first;
+          isLoaded[1] = true;
+          drawFrame(first);
+          lastRenderedFrameIdx = 1;
+          startPreloadQueue();
+        };
+
+        if (typeof first.decode === 'function') {
+          first.decode().then(onFirstReady).catch(onFirstReady);
+        } else {
+          first.onload = onFirstReady;
+          first.onerror = startPreloadQueue;
+        }
+
+        function startPreloadQueue() {
+          const keyframes = [];
+          for (let i = 1; i <= TOTAL_FRAMES; i += 5) {
+            if (i !== 1) keyframes.push(i);
+          }
+
+          const remaining = [];
+          for (let i = 1; i <= TOTAL_FRAMES; i++) {
+            if (i !== 1 && i % 5 !== 0) remaining.push(i);
+          }
+
+          const queue = [...keyframes, ...remaining];
+          let queueIdx = 0;
+          const CONCURRENCY = 6;
+
+          function loadNext() {
+            if (queueIdx >= queue.length) return;
+            const idx = queue[queueIdx++];
+            const img = new Image();
+            img.src = getFrameSrc(idx);
+
+            const handleLoaded = () => {
+              images[idx] = img;
+              isLoaded[idx] = true;
+
+              const currentDesired = getCurrentDesiredIndex();
+              if (idx === currentDesired || Math.abs(idx - currentDesired) <= 2) {
+                renderFrame(currentDesired);
+              }
+
+              loadNext();
+            };
+
+            if (typeof img.decode === 'function') {
+              img.decode().then(handleLoaded).catch(() => {
+                if (img.complete) handleLoaded();
+                else {
+                  img.onload = handleLoaded;
+                  img.onerror = loadNext;
+                }
+              });
+            } else {
+              img.onload = handleLoaded;
+              img.onerror = loadNext;
+            }
+          }
+
+          for (let c = 0; c < CONCURRENCY; c++) {
+            loadNext();
+          }
+        }
+      }
+
+      // Active Navigation Link on Scroll
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('.nav-links a');
+
+      function updateActiveNav() {
+        let current = '';
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop - 150;
+          if (window.scrollY >= sectionTop) {
+            current = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach((link) => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      // Event Listeners
+      window.addEventListener('resize', resizeCanvas, { passive: true });
+      window.addEventListener('scroll', () => {
+        updateScrollProgress();
+        updateActiveNav();
+      }, { passive: true });
+
+      // Init
+      resizeCanvas();
+      updateScrollProgress();
+      preloadSequence();
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>
